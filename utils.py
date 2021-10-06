@@ -152,7 +152,7 @@ def build_dataset(config, use_word, min_freq=5):
     else:
         tokenizer = lambda x: [y for y in x]  # char-level 分为单个字符
     # 先建立语料库
-    _ = build_vocab(config.train_path, tokenizer=tokenizer, max_size=MAX_VOCAB_SIZE, min_freq=min_freq)
+    # _ = build_vocab(config.train_path, tokenizer=tokenizer, max_size=MAX_VOCAB_SIZE, min_freq=min_freq)
 
     vocab = load_vocab(config.vocab_path, max_size=MAX_VOCAB_SIZE, min_freq=min_freq)
     print(f"Vocab size: {len(vocab)}")
@@ -289,7 +289,7 @@ class TextDataset:
         one_sample = self.samples[idx]
         data1 = np.array(one_sample[0])
         data2 = np.array(one_sample[1])
-        label = np.array(one_sample[2])
+        label = np.array(one_sample[2],dtype=np.int32)
 
         self.index = self.index[1:]
         self.current_sample_num -= 1

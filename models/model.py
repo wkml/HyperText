@@ -45,13 +45,13 @@ class Model(nn.Cell):
         if config.embedding_pretrained is not None:
             pass
         else:
-            emb = Tensor(xavier_normal(Tensor(np.random.random((config.n_vocab, config.embed)))))
+            emb = Tensor(xavier_normal(Tensor(np.random.random((config.n_vocab, config.embed)))),dtype=ms.float32)
             # emb = Tensor(xavier_normal(Tensor(np.random.random((500, config.embed)))))
             emb[0] = emb[0].fill(0)
             self.emb = emb
             # self.embedding = ManifoldParameter(emb, requires_grad=True, manifold=self.manifold, c=self.c_seed)
 
-        emb_wordngram = Tensor(xavier_normal(Tensor(np.random.random((config.bucket, config.embed)))))
+        emb_wordngram = Tensor(xavier_normal(Tensor(np.random.random((config.bucket, config.embed)))),dtype=ms.float32)
         # emb_wordngram = Tensor(xavier_normal(Tensor(np.random.random((500, config.embed)))))
         emb_wordngram[0] = emb_wordngram[0].fill(0)
         self.emb_wordngram = emb_wordngram

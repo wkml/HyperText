@@ -5,6 +5,7 @@
 @Author  ：wkml4996
 @Date    ：2021/9/24 14:09 
 """
+from mindspore.nn import SoftmaxCrossEntropyWithLogits,WithLossCell,WithEvalCell,TrainOneStepCell
 from utils import build_dataset, build_dataloader
 from config import Config
 from model import Model
@@ -25,8 +26,15 @@ train_iter = build_dataloader(train_data, config.batch_size, False)
 
 config.n_vocab = len(vocab)
 
-model = Model(config)
+net = Model(config)
+loss_func = SoftmaxCrossEntropyWithLogits(sparse=True,reduction='mean')
+loss_net = WithLossCell(net,loss_func)
 
 for i, data in enumerate(train_iter.create_dict_iterator()):
-    output = model(data)
-    print(output)
+    # print(net(data))
+    loss = loss_net(data,data['label'])
+    print(loss)
+    print('\n')
+
+# for param in net.trainable_params():
+#     print(param)
